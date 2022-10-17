@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title> 
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.1/jquery.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.19.0/js/md5.js"></script>
+</head>
+
+<body>
+    
+    <div style="text-align:center">
+        <div style="margin-left:auto;margin-right:auto">
+            <div style="display: inline;">
+                <textarea id="json" style="width: 410px;height:500px"></textarea>
+            </div>
+            <div style="display: inline;height:100px">
+                <input type="button" value="生成token" onclick="generate()"></input>
+            </div>
+               
+            
+            <div style="display: inline;">
+                <textarea id="result1" style="width: 410px;height:500px"></textarea>
+            </div>
+        </div>
+            
+    
+    </div>
+  
+   
+    
+    <script>
+        function generate(){
+            console.log('adad')
+            let json = document.getElementById("json")
+        
+            const unordered =JSON.parse(json.value);
+    
+            console.log(JSON.stringify(unordered))
+            const ordered = Object.keys(unordered).sort().reduce(
+                (obj, key) => {
+                    obj[key] = unordered[key];
+                    return obj;
+                },
+                {}
+            );
+            console.log(JSON.stringify(ordered))
+            let x = jQuery.param(ordered)
+            let x1 = x.replaceAll("=", "")
+            let x2 = x1.replaceAll("&", "")
+           let result = md5(x2)
+            console.log(result)
+            let to = document.getElementById("token")
+            
+
+           
+            unordered['tok'] = result;
+
+            let result1 = document.getElementById("result1")
+            let text = JSON.stringify(unordered,null,"    ")
+            result1.innerHTML = text
+           
+            
+        }
+
+         
+        
+    </script>
+</body>
+
+</html>
